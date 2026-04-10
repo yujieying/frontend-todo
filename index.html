@@ -17,16 +17,28 @@
       </header>
 
       <form class="add-form" id="addForm" autocomplete="off">
-        <div class="add-form-main">
+        <div class="add-form-fields">
+          <label class="field-label" for="taskTitleInput">待办标题</label>
           <input
             type="text"
-            id="taskInput"
-            class="task-input"
-            placeholder="今天要做什么？"
+            id="taskTitleInput"
+            class="task-input task-input-title"
+            placeholder="简短标题，例如：写周报"
             maxlength="200"
-            aria-label="新任务内容"
+            required
+            aria-label="待办标题"
           />
-          <button type="submit" class="btn btn-primary">➕ 添加任务</button>
+          <label class="field-label field-label-optional" for="taskDescInput">
+            待办描述<span class="optional-hint">（选填）</span>
+          </label>
+          <textarea
+            id="taskDescInput"
+            class="task-input task-input-desc"
+            placeholder="补充细节、截止时间、注意事项等"
+            maxlength="500"
+            rows="2"
+            aria-label="待办描述（选填）"
+          ></textarea>
         </div>
         <div class="add-form-extra">
           <span id="addPriorityLegend" class="priority-label">优先级</span>
@@ -65,6 +77,9 @@
             </label>
           </div>
         </div>
+        <button type="submit" class="btn btn-primary add-form-submit">
+          ➕ 添加任务
+        </button>
       </form>
 
       <div class="stats-wrap">
@@ -100,13 +115,27 @@
         </div>
       </div>
 
+      <div class="task-list-toolbar hidden" id="taskListToolbar">
+        <button
+          type="button"
+          class="btn-toggle-desc"
+          id="toggleDescBtn"
+          aria-pressed="false"
+          aria-controls="taskList"
+          aria-label="切换是否显示描述、创建时间与完成时间"
+        >
+          显示详情
+        </button>
+      </div>
+
       <ul class="task-list" id="taskList" aria-label="任务列表"></ul>
 
       <div class="empty-state" id="emptyState" role="status" aria-live="polite">
         <div class="empty-icon" aria-hidden="true">📭</div>
         <p class="empty-title">这里空空如也</p>
         <p class="empty-desc">
-          太好了，暂时没有待办。想记点什么的话，在上方输入内容并选择优先级，点「➕ 添加任务」就可以啦～
+          太好了，暂时没有待办。填写标题（必填）和描述（选填），选好优先级后点「➕
+          添加任务」即可。
         </p>
       </div>
     </div>
