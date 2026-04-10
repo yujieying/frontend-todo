@@ -1,0 +1,756 @@
+// 设计变量（对齐旧版 + 截图）
+@blue-50: #eff6ff;
+@blue-100: #dbeafe;
+@blue-200: #bfdbfe;
+@blue-400: #60a5fa;
+@blue-500: #3b82f6;
+@blue-600: #2563eb;
+@blue-700: #1d4ed8;
+@slate-500: #64748b;
+@slate-600: #475569;
+@slate-800: #1e293b;
+@purple-100: #ede9fe;
+@purple-200: #ddd6fe;
+@purple-500: #8b5cf6;
+@purple-600: #7c3aed;
+@radius: 12px;
+@radius-sm: 8px;
+@shadow-sm: 0 1px 2px rgba(37, 99, 235, 0.08);
+@shadow-md: 0 4px 14px rgba(37, 99, 235, 0.12);
+@shadow-lg: 0 12px 40px rgba(37, 99, 235, 0.15);
+
+:root {
+  color-scheme: light;
+  --van-primary-color: @blue-600;
+  --van-button-primary-background: linear-gradient(135deg, @blue-500, @blue-600);
+  --van-button-primary-border-color: @blue-600;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC",
+    "Microsoft YaHei", sans-serif;
+  background: linear-gradient(
+    145deg,
+    #e0f2fe 0%,
+    @blue-100 35%,
+    @purple-100 72%,
+    #f3e8ff 100%
+  );
+  color: @slate-800;
+  line-height: 1.5;
+  padding: 1rem;
+  padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+  -webkit-tap-highlight-color: rgba(37, 99, 235, 0.12);
+}
+
+.todo-page {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.todo-card.todo-app {
+  padding: 1.5rem 1.25rem 2rem;
+  padding-left: max(1.25rem, env(safe-area-inset-left, 0px));
+  padding-right: max(1.25rem, env(safe-area-inset-right, 0px));
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: @shadow-lg;
+}
+
+.todo-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+
+  &__title {
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-size: clamp(1.5rem, 4vw, 1.75rem);
+    font-weight: 700;
+    color: @blue-700;
+    letter-spacing: -0.02em;
+  }
+
+  &__icon {
+    font-size: 1.35em;
+    line-height: 1;
+    filter: drop-shadow(0 2px 4px rgba(37, 99, 235, 0.2));
+  }
+
+  &__sub {
+    margin: 0.35rem 0 0;
+    font-size: 0.9rem;
+    color: @slate-500;
+  }
+}
+
+.add-form {
+  margin-bottom: 1.25rem;
+}
+
+.field-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+}
+
+.field-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: @slate-600;
+  letter-spacing: 0.02em;
+
+  &--optional {
+    margin-top: 0.25rem;
+  }
+}
+
+.optional-hint {
+  font-weight: 500;
+  color: @slate-500;
+}
+
+// Vant Field 外观贴近旧版 input
+.todo-app {
+  .field-control {
+    padding: 0;
+    background: transparent;
+
+    .van-field__body {
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      border: 2px solid @blue-200;
+      border-radius: @radius;
+      background: @blue-50;
+      box-shadow: @shadow-sm;
+    }
+
+    .van-field__control {
+      color: @slate-800;
+
+      &::placeholder {
+        color: @slate-500;
+        opacity: 0.8;
+      }
+    }
+
+    &.van-field--focused .van-field__body {
+      border-color: @blue-500;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+    }
+
+    &--textarea .van-field__body {
+      min-height: 4.25rem;
+      align-items: flex-start;
+    }
+
+    &--tight .van-field__body {
+      padding: 0.55rem 0.7rem;
+      font-size: 1rem;
+      border: 2px solid @blue-400;
+      background: #fff;
+    }
+  }
+
+  .van-cell {
+    padding: 0;
+    background: transparent;
+  }
+
+  .van-cell::after {
+    display: none;
+  }
+}
+
+.add-form-extra {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.priority-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: @slate-600;
+}
+
+.add-priority-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+  align-items: stretch;
+  width: 100%;
+}
+
+.priority-btn {
+  position: relative;
+  display: block;
+  min-width: 0;
+  cursor: pointer;
+  user-select: none;
+
+  &__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .priority-btn-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    padding: 0.42rem 0.35rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border-radius: 6px;
+    border: 2px solid transparent;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s,
+      transform 0.15s;
+  }
+
+  &:active .priority-btn-text {
+    transform: scale(0.97);
+  }
+
+  &--high .priority-btn-text {
+    background: #fee2e2;
+    color: #b91c1c;
+    border-color: #fecaca;
+  }
+
+  &--high.priority-btn--checked .priority-btn-text {
+    background: #ef4444;
+    color: #fff;
+    border-color: #dc2626;
+    box-shadow: 0 2px 10px rgba(239, 68, 68, 0.35);
+  }
+
+  &--medium .priority-btn-text {
+    background: #fef3c7;
+    color: #b45309;
+    border-color: #fde68a;
+  }
+
+  &--medium.priority-btn--checked .priority-btn-text {
+    background: #f59e0b;
+    color: #fff;
+    border-color: #d97706;
+    box-shadow: 0 2px 10px rgba(245, 158, 11, 0.35);
+  }
+
+  &--low .priority-btn-text {
+    background: #dcfce7;
+    color: #15803d;
+    border-color: #bbf7d0;
+  }
+
+  &--low.priority-btn--checked .priority-btn-text {
+    background: #22c55e;
+    color: #fff;
+    border-color: #16a34a;
+    box-shadow: 0 2px 10px rgba(34, 197, 94, 0.35);
+  }
+}
+
+.btn-add-task.van-button--primary {
+  height: auto;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  box-shadow: @shadow-md;
+  background: linear-gradient(135deg, @blue-500, @blue-600);
+  border-color: transparent;
+
+  &:active {
+    opacity: 0.95;
+  }
+}
+
+.stats-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 0.75rem;
+  background: linear-gradient(135deg, @blue-50, #f5f3ff);
+  border-radius: @radius;
+  border: 1px solid @blue-100;
+  box-shadow: @shadow-sm;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.stat-value {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: @blue-600;
+}
+
+.stat-done .stat-value {
+  color: @slate-600;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: @slate-500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.bulk-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.bulk-btn {
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  height: auto !important;
+  padding: 0.6rem 1rem !important;
+}
+
+.bulk-btn--done.van-button--plain {
+  color: @purple-600 !important;
+  border-color: @purple-200 !important;
+  background: #fff !important;
+
+  &:not(:disabled):active {
+    background: @purple-100 !important;
+    border-color: @purple-500 !important;
+  }
+}
+
+.bulk-btn--all.van-button--plain {
+  color: #b91c1c !important;
+  border-color: #fecaca !important;
+  background: #fff !important;
+
+  &:not(:disabled):active {
+    background: #fef2f2 !important;
+    border-color: #f87171 !important;
+  }
+}
+
+.bulk-btn:disabled {
+  opacity: 0.45 !important;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 0.5rem;
+
+  .details-label {
+    color: @slate-600;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+}
+
+.todo-dropdown-menu {
+  margin-bottom: 0.65rem;
+  border-radius: @radius-sm;
+  overflow: hidden;
+  border: 1px solid @blue-100;
+
+  .van-dropdown-menu__bar {
+    height: 38px;
+    background: @blue-50;
+    box-shadow: none;
+  }
+
+  .van-dropdown-menu__item {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .van-dropdown-menu__title {
+    font-size: 0.72rem;
+    line-height: 1.25;
+    padding: 0 2px;
+    max-width: 100%;
+  }
+}
+
+.todo-list-controls-compact {
+  margin-bottom: 0.65rem;
+
+  &__btn {
+    height: 38px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-color: @blue-200 !important;
+    color: @blue-700 !important;
+    background: @blue-50 !important;
+  }
+}
+
+.list-controls-sheet {
+  padding: 1rem 1.1rem 1.25rem;
+  padding-bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
+  max-height: 78vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+
+  &__head {
+    font-size: 1rem;
+    font-weight: 700;
+    color: @slate-800;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  &__done {
+    margin-top: 0.35rem;
+  }
+}
+
+.sheet-block {
+  margin-bottom: 1rem;
+
+  &__label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: @slate-600;
+    margin-bottom: 0.45rem;
+  }
+}
+
+.sheet-radio-row.van-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.65rem;
+}
+
+.sheet-radio-col.van-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.empty-wrap {
+  margin-top: 0.5rem;
+  border-radius: @radius;
+  background: linear-gradient(135deg, @blue-50, #faf5ff);
+  border: 2px dashed @blue-200;
+}
+
+.task-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.task-item {
+  --task-check-size: 1.25rem;
+  --task-check-gap: 0.65rem;
+
+  display: grid;
+  grid-template-columns: var(--task-check-size) minmax(0, 1fr);
+  column-gap: var(--task-check-gap);
+  row-gap: 0.65rem;
+  align-items: start;
+  padding: 0.85rem 1rem;
+  border: 1px solid @blue-100;
+  border-radius: @radius;
+  box-shadow: @shadow-sm;
+  transition: box-shadow 0.2s, border-color 0.2s;
+
+  &:hover {
+    box-shadow: @shadow-md;
+    border-color: @blue-200;
+  }
+
+  &.priority-high {
+    border-left: 4px solid #ef4444;
+    background: linear-gradient(90deg, #fef2f2 0%, #fff 42%);
+  }
+
+  &.priority-medium {
+    border-left: 4px solid #f59e0b;
+    background: linear-gradient(90deg, #fffbeb 0%, #fff 42%);
+  }
+
+  &.priority-low {
+    border-left: 4px solid #22c55e;
+    background: linear-gradient(90deg, #f0fdf4 0%, #fff 42%);
+  }
+
+  &.completed {
+    opacity: 0.9;
+  }
+
+  &.completed .task-title {
+    text-decoration: line-through;
+    color: @slate-500;
+    font-weight: 600;
+  }
+
+  &.completed .task-desc {
+    text-decoration: line-through;
+    color: @slate-500;
+    opacity: 0.85;
+  }
+}
+
+.task-row-title {
+  display: contents;
+}
+
+.task-main {
+  grid-column: 2;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.task-title {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+  word-break: break-word;
+  color: @slate-800;
+}
+
+.task-desc {
+  margin: 0;
+  font-size: 0.9rem;
+  color: @slate-600;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.task-meta {
+  font-size: 0.75rem;
+  color: @slate-500;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.task-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  align-items: baseline;
+}
+
+.task-meta-label {
+  font-weight: 600;
+  color: @slate-600;
+
+  &::after {
+    content: "：";
+  }
+}
+
+.task-meta-value {
+  font-weight: 500;
+  color: @slate-500;
+  word-break: break-word;
+}
+
+.task-item.completed .task-meta-label,
+.task-item.completed .task-meta-value {
+  color: @slate-500;
+}
+
+.task-edit-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: @slate-600;
+}
+
+.task-edit-body {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.edit-priority-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
+  margin-top: 0.1rem;
+}
+
+.task-toolbar {
+  grid-column: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.35rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.priority-select {
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+  padding: 0.28rem 1.45rem 0.28rem 0.5rem;
+  border: 1px solid @blue-200;
+  border-radius: 6px;
+  background-color: @blue-50;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.35rem center;
+  background-size: 0.7rem;
+  color: @blue-600;
+  cursor: pointer;
+  outline: none;
+  min-width: 2.75rem;
+  min-height: 1.85rem;
+  appearance: none;
+  -webkit-appearance: none;
+  flex: 0 1 auto;
+
+  &:hover {
+    background-color: @blue-100;
+    border-color: @blue-400;
+  }
+
+  &:focus {
+    border-color: @blue-500;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  }
+}
+
+.task-footer-btn {
+  font-weight: 600 !important;
+  font-size: 0.75rem !important;
+  min-height: 1.85rem !important;
+  height: 1.85rem !important;
+  line-height: 1.2 !important;
+  padding: 0 0.85rem !important;
+}
+
+.task-footer-btn--save.van-button--primary {
+  background: @blue-600 !important;
+  border-color: @blue-600 !important;
+}
+
+.task-footer-btn--cancel.van-button--plain {
+  color: @slate-600 !important;
+  border-color: @blue-200 !important;
+  background: #fff !important;
+}
+
+.task-footer-btn--edit.van-button--plain {
+  color: @blue-600 !important;
+  border-color: @blue-200 !important;
+  background: @blue-50 !important;
+}
+
+.task-footer-btn--delete.van-button--plain {
+  color: @slate-600 !important;
+  border-color: @blue-200 !important;
+  background: @blue-50 !important;
+}
+
+.task-toolbar .task-footer-btn--delete {
+  margin-left: auto;
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 0.65rem;
+  }
+
+  .todo-card.todo-app {
+    padding: 1.15rem 1rem 1.5rem;
+    border-radius: 16px;
+  }
+
+  .todo-header {
+    margin-bottom: 1.15rem;
+  }
+
+  .add-form-extra {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .add-priority-buttons {
+    width: 100%;
+  }
+
+  .priority-btn .priority-btn-text {
+    min-height: 2.25rem;
+    padding: 0.4rem 0.75rem;
+  }
+
+  .todo-app .field-control .van-field__body,
+  .btn-add-task {
+    font-size: 16px;
+  }
+
+  .stats-wrap .stats {
+    gap: 1rem;
+  }
+
+  .task-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    align-items: center;
+  }
+
+  .priority-select {
+    width: auto;
+    max-width: 4.25rem;
+  }
+
+  .task-footer-btn {
+    width: auto !important;
+    flex: 0 0 auto;
+  }
+
+}
